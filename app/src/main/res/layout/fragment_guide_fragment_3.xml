@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/RIV_Register_User"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:src="@mipmap/default_hand"
+            app:riv_border_color="#ffffff"
+            app:riv_border_width="2dp"
+            app:riv_oval="true" />
+
+        <EditText
+            android:id="@+id/TV_Register_Motto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/TV_User_Name"
+            android:gravity="center"
+            android:maxLines="1"
+            android:hint="点击修改宣言"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginTop="30dp"
+            android:text="目标体重(kg)"
+            android:textColor="#222222"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/TV_Register_Target_Weight_Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11.0dp"
+            android:includeFontPadding="false"
+            android:text="45"
+            android:textColor="#FF0000"
+            android:textSize="25.0sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.zkk.view.rulerview.RulerView
+                android:id="@+id/Ruler_Target_Weight"
+                android:layout_width="match_parent"
+                android:layout_height="65.0dip"
+                android:layout_marginTop="24.0dip"
+                app:alphaEnable="true"
+                app:lineMaxHeight="40dp"
+                app:lineMidHeight="30dp"
+                app:lineMinHeight="20dp"
+                app:lineSpaceWidth="10dp"
+                app:lineWidth="2dip"
+                app:lineColor="#000000"
+                app:textColor="#ff0000"
+                />
+
+            <ImageView
+                android:layout_width="14.0dip"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6.0dip"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_info_ruler_weight"/>
+        </RelativeLayout>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/BTN_Register"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/register_weight"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

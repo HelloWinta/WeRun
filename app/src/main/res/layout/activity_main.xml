@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#ffffff">
+
+
+    <!--Fragment显示-->
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/frameMenu"
+        android:layout_alignParentTop="true" >
+    </FrameLayout>
+    <!--Fragment显示结束-->
+
+    <!--底部按钮栏显示-->
+    <FrameLayout
+        android:id="@+id/frameMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <!-- 历史 -->
+
+            <LinearLayout
+                android:id="@+id/FL_History"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1" >
+
+                <Button
+                    android:id="@+id/BTN_History"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="top|center"
+                    android:background="@mipmap/unhistory"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="历史"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- 跑步 -->
+
+            <LinearLayout
+                android:id="@+id/FL_Run"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1" >
+
+                <Button
+                    android:id="@+id/BTN_Run"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="top|center"
+                    android:background="@mipmap/unrun" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="运动"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- 个人数据 -->
+
+            <LinearLayout
+                android:id="@+id/FL_Me"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1" >
+
+                <Button
+                    android:id="@+id/BTN_User"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="top|center"
+                    android:background="@mipmap/unuser"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:text="我"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+    <!--底部按钮栏显示结束-->
+
+</RelativeLayout>

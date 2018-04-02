@@ -1,0 +1,148 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:includeFontPadding="false"
+            android:text="性别"
+            android:textColor="#222222"
+            android:textSize="20sp"
+            />
+
+        <CheckBox
+            android:id="@+id/BTN_Register_Sex"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/user_sex_selector"
+            android:button="@null"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/register_info_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginTop="20dp"
+            android:text="身高(cm)"
+            android:textColor="#222222"
+            android:textSize="15.0sp"/>
+
+        <TextView
+            android:id="@+id/TV_Register_Height_Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:includeFontPadding="false"
+            android:text="165"
+            android:textColor="#222222"
+            android:textSize="24sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.zkk.view.rulerview.RulerView
+                android:id="@+id/Ruler_Height"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="24dp"
+                app:alphaEnable="true"
+                app:lineColor="#000000"
+                app:lineMaxHeight="40dp"
+                app:lineMidHeight="30dp"
+                app:lineMinHeight="20dp"
+                app:lineSpaceWidth="10dp"
+                app:lineWidth="2dip"
+                app:textColor="@color/black"
+                app:minValue="80.0"
+                app:maxValue="250.0"
+                app:perValue="1"
+                app:selectorValue="165.0"
+                />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="46dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="11dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_info_ruler_height" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/register_info_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginTop="20dp"
+            android:text="体重(kg)"
+            android:textColor="#222222"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/Tv_Register_Weight_Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11.0dp"
+            android:includeFontPadding="false"
+            android:text="55"
+            android:textColor="#222222"
+            android:textSize="24.0sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.zkk.view.rulerview.RulerView
+                android:id="@+id/Ruler_Weight"
+                android:layout_width="match_parent"
+                android:layout_height="58.0dip"
+                android:layout_marginTop="24.0dip"
+                app:alphaEnable="true"
+                app:lineColor="#000000"
+                app:textColor="@color/black"
+                />
+
+            <ImageView
+                android:layout_width="14.0dip"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6.0dip"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_info_ruler_weight"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/BTN_Register"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:background="@mipmap/go"
+            />
+    </LinearLayout>
+</LinearLayout>
+

@@ -1,0 +1,10 @@
+<litepal>
+    <dbname value="WeRun"></dbname>
+    <version value="1"></version>
+
+    <list>
+        <mapping class="com.werun.db.User_Data"></mapping>
+        <mapping class="com.werun.db.Run_Data"></mapping>
+    </list>
+
+</litepal>

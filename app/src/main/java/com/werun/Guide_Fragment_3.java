@@ -7,39 +7,51 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
 import android.support.v7.app.AlertDialog;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.werun.Crop.CropImageUtils;
 import com.zkk.view.rulerview.RulerView;
 
+import org.litepal.LitePal;
 
 
-public class Guide_Fragment_3 extends Fragment implements View.OnClickListener {
+public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
 
     private static final int CHOOSE_PICTURE = 0;
     private static final int TAKE_PICTURE = 1;
-    private CropImageUtils cropImageUtils;
 
+    private boolean registerSex; // false is boy  true is girl
+    private double registerHeight;
+    private double registerWidth;
+    private String registerIcon;
+    private String registerMotto;
+    private double targetWidth;
+
+    private CropImageUtils cropImageUtils;
 
     private RulerView Ruler_Target_Weight;
 
     private RoundedImageView RIV_Register_User;
-    private EditText TV_Register_Motto;
+    private EditText ET_Register_Motto;
     private TextView TV_Register_Target_Weight_Value;
     private Button BTN_Register;
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        registerSex = bundle.getBoolean("Register_Sex");
+        registerHeight = Double.parseDouble(bundle.getString("Register_Height"));
+        registerWidth = Double.parseDouble(bundle.getString("Register_Width"));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +67,7 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener {
     private void initView(View view) {
         RIV_Register_User = (RoundedImageView) view.findViewById(R.id.RIV_Register_User);
         Ruler_Target_Weight = (RulerView) view.findViewById(R.id.Ruler_Target_Weight);
-        TV_Register_Motto = (EditText) view.findViewById(R.id.TV_Register_Motto);
+        ET_Register_Motto = (EditText) view.findViewById(R.id.ET_Register_Motto);
         TV_Register_Target_Weight_Value = (TextView) view.findViewById(R.id.TV_Register_Target_Weight_Value);
         BTN_Register = (Button) view.findViewById(R.id.BTN_Register);
     }
@@ -84,12 +96,18 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener {
                 showChoosePicDialog(view);
                 break;
             case R.id.BTN_Register:
-
+                registerMotto = ET_Register_Motto.getText().toString();
+                targetWidth = Double.valueOf(TV_Register_Target_Weight_Value.getText().toString());
+                LitePal.getDatabase();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
                 break;
             default:
                 break;
         }
     }
+
 
     //配置 dialog
     private void showChoosePicDialog(View view) {
@@ -138,6 +156,7 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener {
             public void cropPictureFinish(String path)
             {
                 //裁剪回调
+                registerIcon = path;
                 Bitmap bitmap= BitmapFactory.decodeFile(path);
                 RIV_Register_User.setImageBitmap(bitmap);
             }

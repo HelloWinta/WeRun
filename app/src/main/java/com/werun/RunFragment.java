@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
 public class RunFragment extends Fragment {
 
 
@@ -18,5 +17,8 @@ public class RunFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_run, container, false);
     }
+
+
+
 
 }

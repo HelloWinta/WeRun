@@ -44,8 +44,8 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher"
-            app:riv_border_color="#ffffff"
+            android:src="@mipmap/unuser"
+            app:riv_border_color="#000000"
             app:riv_border_width="2dp"
             app:riv_oval="true" />
 
@@ -60,7 +60,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/TV_Motto"
+            android:id="@+id/TV_motto"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -110,6 +110,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/TV_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -119,6 +120,7 @@
                 android:textColor="#000000"/>
 
             <TextView
+                android:id="@+id/TV_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,6 +148,7 @@
             android:background="@mipmap/target"/>
 
         <TextView
+            android:id="@+id/TV_targetWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -162,6 +165,7 @@
         android:gravity="bottom">
 
         <Button
+            android:id="@+id/BTN_Setremind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FF6347"

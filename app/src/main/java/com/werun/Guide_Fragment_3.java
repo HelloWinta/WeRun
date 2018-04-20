@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.werun.Crop.CropImageUtils;
+import com.werun.db.User_Data;
 import com.zkk.view.rulerview.RulerView;
 
 import org.litepal.LitePal;
@@ -28,11 +29,11 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
     private static final int TAKE_PICTURE = 1;
 
     private boolean registerSex; // false is boy  true is girl
-    private double registerHeight;
-    private double registerWidth;
-    private String registerIcon;
-    private String registerMotto;
-    private double targetWidth;
+    private double registerHeight;//高度
+    private double registerWeight;//体重
+    private String registerIcon;//头像地址
+    private String registerMotto;//宣言
+    private double targetWeight;//目标体重
 
     private CropImageUtils cropImageUtils;
 
@@ -50,7 +51,7 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
         Bundle bundle = getArguments();
         registerSex = bundle.getBoolean("Register_Sex");
         registerHeight = Double.parseDouble(bundle.getString("Register_Height"));
-        registerWidth = Double.parseDouble(bundle.getString("Register_Width"));
+        registerWeight = Double.parseDouble(bundle.getString("Register_Weight"));
     }
 
     @Override
@@ -97,8 +98,9 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
                 break;
             case R.id.BTN_Register:
                 registerMotto = ET_Register_Motto.getText().toString();
-                targetWidth = Double.valueOf(TV_Register_Target_Weight_Value.getText().toString());
+                targetWeight = Double.valueOf(TV_Register_Target_Weight_Value.getText().toString());
                 LitePal.getDatabase();
+                setUserDate(registerSex,registerHeight,registerWeight,targetWeight,registerIcon,registerMotto);
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -106,6 +108,20 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
             default:
                 break;
         }
+    }
+
+    //配置UserData
+
+    private void setUserDate(Boolean sex,double height,double weight,double targetWidth,String icon,String motto) {
+
+        User_Data userData = new User_Data();
+        userData.setSex(sex);
+        userData.setHeight(height);
+        userData.setWeight(weight);
+        userData.setTarget_weight(targetWidth);
+        userData.setIcon_address(icon);
+        userData.setMotto(motto);
+        userData.save();
     }
 
 

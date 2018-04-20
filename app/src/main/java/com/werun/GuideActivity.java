@@ -31,9 +31,9 @@ public class GuideActivity extends FragmentActivity{
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"稍后可在 我 中设置",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(GuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
             }
         });
 

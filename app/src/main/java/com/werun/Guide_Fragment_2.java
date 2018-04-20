@@ -79,7 +79,7 @@ public class Guide_Fragment_2 extends Fragment implements View.OnClickListener{
         Bundle bundle = new Bundle();
         bundle.putBoolean("Register_Sex", CB_Register_Sex.isChecked());//ture is girl ,false is boy
         bundle.putString("Register_Height",TV_Register_Height_Value.getText().toString());
-        bundle.putString("Register_Width",TV_Register_Weight_Value.getText().toString());
+        bundle.putString("Register_Weight",TV_Register_Weight_Value.getText().toString());
         Guide_Fragment_3 gf3 = new Guide_Fragment_3();
         gf3.setArguments(bundle);
         getActivity().getSupportFragmentManager()

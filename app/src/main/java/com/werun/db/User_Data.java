@@ -3,13 +3,14 @@ package com.werun.db;
 
 import org.litepal.crud.DataSupport;
 
+
 /**
  * Created by winta on 2018/4/3.
  */
 
 public class User_Data extends DataSupport {
 
-    private int id;
+    private String userId;
     private boolean sex; // false is boy,true is girl
     private double height;
     private double weight;
@@ -17,8 +18,8 @@ public class User_Data extends DataSupport {
     private double target_weight;
     private String motto;
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setSex(boolean sex) {
@@ -45,8 +46,8 @@ public class User_Data extends DataSupport {
         this.motto = motto;
     }
 
-    public int getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
     public boolean getSex() {

@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/RIV_User"
-            android:text="我"
-            android:textColor="#000000"
-            android:textSize="20sp"/>
+            android:hint="ID"
+            android:textColor="#ffffff"
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/TV_motto"

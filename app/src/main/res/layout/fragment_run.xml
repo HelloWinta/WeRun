@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorMain"
     xmlns:tools="http://schemas.android.com/tools">
@@ -21,6 +22,58 @@
             android:text="运动"
             />
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="只显示最近10天的运动记录"
+        android:textSize="15sp"
+        android:textColor="#02bbb7"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_marginLeft="10dp"
+        android:text="公里"
+        android:textSize="15sp"
+        android:textColor="#02bbb7"
+        />
+
+
+
+    <com.werun.Utils.ChartView
+        android:id="@+id/chartview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginRight="10dp"
+        app:bgcolor="@color/colorMain"
+        app:interval="40dp"
+        app:isScroll="false"
+        app:linecolor="#02bbb7"
+        app:xylinecolor="#C4C4C4"
+        app:xylinewidth="1dp"
+        app:xytextcolor="#7e7e7e"
+        app:xytextsize="12sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/BTN_begin"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:background="@mipmap/run_go"/>
+    </RelativeLayout>
+
+
+
 
 
 

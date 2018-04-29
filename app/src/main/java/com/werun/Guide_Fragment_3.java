@@ -16,11 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.werun.Crop.CropImageUtils;
+import com.werun.Utils.CropImageUtils;
 import com.werun.db.User_Data;
 import com.zkk.view.rulerview.RulerView;
 
 import org.litepal.LitePal;
+
+import java.util.UUID;
 
 
 public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
@@ -34,6 +36,7 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
     private String registerIcon;//头像地址
     private String registerMotto;//宣言
     private double targetWeight;//目标体重
+    private String userId;//目标id
 
     private CropImageUtils cropImageUtils;
 
@@ -99,8 +102,10 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
             case R.id.BTN_Register:
                 registerMotto = ET_Register_Motto.getText().toString();
                 targetWeight = Double.valueOf(TV_Register_Target_Weight_Value.getText().toString());
-                LitePal.getDatabase();
-                setUserDate(registerSex,registerHeight,registerWeight,targetWeight,registerIcon,registerMotto);
+                //UUID随机获得一串数据
+                userId = UUID.randomUUID().toString().replaceAll("-","");
+                LitePal.getDatabase();//使用litepall
+                setUserDate(userId,registerSex,registerHeight,registerWeight,targetWeight,registerIcon,registerMotto);
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -112,9 +117,10 @@ public class Guide_Fragment_3 extends Fragment implements View.OnClickListener{
 
     //配置UserData
 
-    private void setUserDate(Boolean sex,double height,double weight,double targetWidth,String icon,String motto) {
+    private void setUserDate(String id,Boolean sex,double height,double weight,double targetWidth,String icon,String motto) {
 
         User_Data userData = new User_Data();
+        userData.setUserId(id);
         userData.setSex(sex);
         userData.setHeight(height);
         userData.setWeight(weight);

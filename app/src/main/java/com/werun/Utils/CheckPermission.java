@@ -1,4 +1,4 @@
-package com.werun;
+package com.werun.Utils;
 
 import android.Manifest;
 import android.app.Activity;
@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
+import com.werun.R;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
@@ -78,7 +79,7 @@ public abstract class CheckPermission
                 case REQUEST_CODE_PERMISSION_CAMERA:
                     AndPermission.with(activity)
                             .requestCode(REQUEST_CODE_PERMISSION_CAMERA)
-                            .permission(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .permission(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION)
                             .callback(permissionListener)
                             // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
                             // 这样避免用户勾选不再提示，导致以后无法申请权限。
@@ -94,7 +95,6 @@ public abstract class CheckPermission
                                 }
                             })
                             .start();
-                    break;
             }
         }
     }

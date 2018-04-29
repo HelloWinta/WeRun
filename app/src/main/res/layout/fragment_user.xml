@@ -8,7 +8,7 @@
     <!--自定义ActionBar-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="40dp"
         android:background="@color/colorPrimary">
 
         <TextView
@@ -23,8 +23,8 @@
 
         <Button
             android:id="@+id/BTN_Edit"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

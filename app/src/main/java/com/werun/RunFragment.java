@@ -135,9 +135,14 @@ public class RunFragment extends Fragment {
         for (Run_Data run_data : runData) {
 
             distance += (int)run_data.getDistance();
-
         }
         return distance;
 
     }
+
+    public void updateChart() {
+        setChart();
+    }
+
+
 }

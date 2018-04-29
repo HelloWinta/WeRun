@@ -1,9 +1,13 @@
 package com.werun;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Run extends Activity implements LocationSource, AMapLocationListener,View.OnClickListener {
+public class Run extends Activity implements LocationSource, AMapLocationListener, View.OnClickListener {
 
     private Chronometer CM_runTime;
     private TextView TV_runDistance;
@@ -44,8 +48,8 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
 
     private float saveSpeed;
     private int runTime;
-    private float totalDistance=0;
-    private float latDistance=0;//两个坐标间的距离
+    private float totalDistance = 0;
+    private float latDistance = 0;//两个坐标间的距离
     private float saveDistance;
     private int saveCalorie;
     private String beginTime;
@@ -118,11 +122,10 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BTN_stop:
-                if(saveDistance>=0.05) { //运动距离超过50米为一次有效的锻炼才能被记录
-                    LitePal.getDatabase();
-                    setRunData();
-                }
-                finish();
+                LitePal.getDatabase();
+                setRunData();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -145,32 +148,31 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     }
 
 
-
     /**
      * 绘制两个坐标点之间的线段,从以前位置到现在位置
      */
     private void setUpMap(LatLng oldData, LatLng newData) {
 
-        if(AMapUtils.calculateLineDistance(oldData,newData)<50) {
+        if (AMapUtils.calculateLineDistance(oldData, newData) < 50) {
             // 绘制一个大地曲线
             aMap.addPolyline((new PolylineOptions())
                     .add(oldData, newData)
                     .geodesic(true).color(Color.GREEN));
 
             latDistance = AMapUtils.calculateLineDistance(oldData, newData);
-            totalDistance += (latDistance/1000);
-            saveDistance=(float)(Math.round(totalDistance*100))/100;//将米转化为公里数保持两位小数
+            totalDistance += (latDistance / 1000);
+            saveDistance = (float) (Math.round(totalDistance * 100)) / 100;//将米转化为公里数保持两位小数
             TV_runDistance.setText(saveDistance + "公里");
 
             //更新速度
             updateTime();
-            saveSpeed = (float) (Math.round((totalDistance / (runTime / 3600))));
+            saveSpeed = saveDistance/(runTime/3600);
             TV_runSpeed.setText(saveSpeed + "km/h");
 
             //更新消耗的卡路里
             //体重（kg）* 距离（km）* 运动系数（k）；健走：k=0.8214；跑步：k=1.036；自行车：k=0.6142；轮滑、溜冰：k=0.518；室外滑雪：k=0.888
-            saveCalorie = (int)(RunFragment.weight*totalDistance*1.306);
-            TV_consumeCalorie.setText(saveCalorie+"Kcal");
+            saveCalorie = (int) (RunFragment.weight * totalDistance * 1.306);
+            TV_consumeCalorie.setText(saveCalorie + "Kcal");
 
         }
 
@@ -179,7 +181,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     /**
      * 转换时间
      */
-    private  void updateTime() {
+    private void updateTime() {
         String time = CM_runTime.getText().toString();// 00:00
         String[] split = time.split(":");
         int totals = Integer.parseInt(split[1]) + Integer.parseInt(split[0]) * 60;
@@ -203,7 +205,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
                 double lon = newLatLng.longitude;
                 double lat = newLatLng.latitude;
                 double point[] = MapFixUtil.transform(lat, lon);
-                LatLng newFixLatLng = new LatLng(point[0],point[1]);
+                LatLng newFixLatLng = new LatLng(point[0], point[1]);
                 //添加起点坐标
                 latLngs.add(newFixLatLng);
                 if (isFirstLatLng) {
@@ -325,4 +327,5 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
             mlocationClient.onDestroy();
         }
     }
+
 }

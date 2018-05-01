@@ -166,7 +166,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
 
             //更新速度
             updateTime();
-            saveSpeed = saveDistance/(runTime/3600);
+            saveSpeed = (Math.round(((saveDistance*3600)/runTime)*100)) / 100;
             TV_runSpeed.setText(saveSpeed + "km/h");
 
             //更新消耗的卡路里

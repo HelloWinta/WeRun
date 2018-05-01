@@ -14,7 +14,7 @@ public class Run_Data extends DataSupport {
     private int time;
     private float speed;
     private float distance;
-    private int calorie;
+    private int calorie =0;
     private String trackPic;
 
     public void setRunDate(String runDate) {

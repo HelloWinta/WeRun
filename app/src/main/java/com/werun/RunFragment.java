@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.werun.Utils.ChartView;
+import com.werun.Utils.RunDataAdapter;
 import com.werun.db.Run_Data;
 import com.werun.db.User_Data;
 
@@ -60,22 +62,26 @@ public class RunFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_run, container, false);
+        final View view = inflater.inflate(R.layout.fragment_run, container, false);
 
         chartView = (ChartView) view.findViewById(R.id.chartview);
-        //设置按钮
-        Button button = (Button) view.findViewById(R.id.BTN_begin);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Run.class);
-                startActivity(intent);
-            }
-        });
+
         //设置图表值
         setChart();
         //应为主界面直接跳转到这，所以先将sqlite中的值提取出来绑定
         bindUserData();
+
+        //监听当前选择的时间
+        chartView.setOnChangeDateListener(new ChartView.OnChangeDateListener() {
+            @Override
+            public void OnChange(int selectIndex) {
+                getRightDate(7-selectIndex);
+                bindListViewData(date,view);
+            }
+        });
+
+        getRightDate(0);//0表示今天，1表示昨天。。。。。。。。。
+        bindListViewData(date ,view);
         return view;
     }
 
@@ -100,48 +106,67 @@ public class RunFragment extends Fragment {
 
     private void setChart() {
         for (int i = 6; i >= 0; i--) {
-            //获取时间
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -i);//i 天之前的时间
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH) + 1;
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            if (month > 9 && day >= 10) {
-                date = year + "年" + month + "月" + day + "日";
-            } else if (month <= 9 && day < 10) {
-                date = year + "年" + "0"+month + "月" + "0"+day + "日";
-            } else if (month <= 9 && day >= 10) {
-                date = year + "年" + "0"+month + "月"+day + "日";
-            } else if (month > 9 && day < 10) {
-                date = year + "年"+month + "月" + "0"+day + "日";
-            }
+            getRightDate(i);
             xValue.add(day + "日");
-            value.put(day + "日", bindRunData(date));//60--240
+            value.put(day + "日", bindChartData(date));//60--240
         }
 
         for (int i = 0; i < 6; i++) {
-            yValue.add(i * 2);
+            yValue.add(i * 2000);
         }
         chartView.setValue(value, xValue, yValue);
 
     }
 
+    private String getRightDate(int i) {
+        //获取时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -i);//i 天之前的时间
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (month > 9 && day >= 10) {
+            date = year + "年" + month + "月" + day + "日";
+        } else if (month <= 9 && day < 10) {
+            date = year + "年" + "0" + month + "月" + "0" + day + "日";
+        } else if (month <= 9 && day >= 10) {
+            date = year + "年" + "0" + month + "月" + day + "日";
+        } else if (month > 9 && day < 10) {
+            date = year + "年" + month + "月" + "0" + day + "日";
+        }
+        return date;
+    }
+
     /**
      * 绑定运动信息数据库
      */
-    private int bindRunData(String date) {
-        int distance=0;
+    private int bindChartData(String date) {
+        int distance = 0;
         List<Run_Data> runData = DataSupport.select("distance").where("runDate = ?", date).find(Run_Data.class);
         for (Run_Data run_data : runData) {
 
-            distance += (int)run_data.getDistance();
+            distance += (run_data.getDistance()*1000);
+
         }
         return distance;
 
     }
 
+    //更新图表信息
     public void updateChart() {
         setChart();
+    }
+
+    /**
+     * 绑定listView数据
+     */
+
+    private List<Run_Data> runDataList = new ArrayList<>();
+    private void bindListViewData(String date ,View view) {
+        runDataList = DataSupport.where("runDate = ?", date).find(Run_Data.class);
+        RunDataAdapter adapter = new RunDataAdapter(getContext(), R.layout.history_listview, runDataList);
+        ListView listView = (ListView) view.findViewById(R.id.LV_history);
+        listView.setAdapter(adapter);
     }
 
 

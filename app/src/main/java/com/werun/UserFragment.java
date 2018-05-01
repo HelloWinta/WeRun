@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.werun.db.Run_Data;
 import com.werun.db.User_Data;
 
 import org.litepal.crud.DataSupport;
@@ -25,15 +27,19 @@ import java.util.UUID;
  * A simple {@link Fragment} subclass.
  */
 
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements View.OnClickListener {
 
-    private Button BTN_setRemind;
     private RoundedImageView RIV_User;
-    private TextView TV_motto;
-    private TextView TV_height;
-    private TextView TV_weight;
-    private TextView TV_targetWeight;
+    private EditText ET_motto;
+    private EditText ET_height;
+    private EditText ET_weight;
+    private EditText ET_targetWeight;
     private TextView TV_User_Name;
+    private TextView TV_totalDistance;
+    private TextView TV_totalCalorie;
+    private Button BTN_Edit;
+
+    private boolean isEnable = false;
 
     private String userId;//id
     private double weight;//体重
@@ -49,18 +55,23 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         initView(view);
         initData();
+        bindRun();
         return view;
     }
 
     //初始化控件
     private void initView(View view) {
+        BTN_Edit = (Button) view.findViewById(R.id.BTN_Edit);
         RIV_User = (RoundedImageView) view.findViewById(R.id.RIV_User);
         TV_User_Name = (TextView) view.findViewById(R.id.TV_User_Name);
-        TV_motto = (TextView) view.findViewById(R.id.TV_motto);
-        TV_height = (TextView) view.findViewById(R.id.TV_height);
-        TV_weight = (TextView) view.findViewById(R.id.TV_weight);
-        TV_targetWeight = (TextView) view.findViewById(R.id.TV_targetWeight);
-        BTN_setRemind = (Button) view.findViewById(R.id.BTN_Setremind);
+        ET_motto = (EditText) view.findViewById(R.id.ET_motto);
+        ET_height = (EditText) view.findViewById(R.id.ET_height);
+        ET_weight = (EditText) view.findViewById(R.id.ET_weight);
+        ET_targetWeight = (EditText) view.findViewById(R.id.ET_targetWeight);
+        TV_totalDistance = (TextView) view.findViewById(R.id.TV_totalDistance);
+        TV_totalCalorie = (TextView) view.findViewById(R.id.TV_totalCalorie);
+        setEnable(isEnable);
+
     }
 
     //初始化控件的默认值
@@ -77,13 +88,61 @@ public class UserFragment extends Fragment {
             Bitmap bitmap= BitmapFactory.decodeFile(icon);
             RIV_User.setImageBitmap(bitmap);
         }
-        TV_User_Name.setText(userId);
-        TV_motto.setText(motto);
-        TV_height.setText(String.valueOf(height));
-        TV_weight.setText(String.valueOf(weight));
-        TV_targetWeight.setText(String.valueOf(targetWeight));
+        BTN_Edit.setOnClickListener(this);
+        TV_User_Name.setText("id:"+userId);
+        ET_motto.setText(motto);
+        ET_height.setText(String.valueOf(height));
+        ET_weight.setText(String.valueOf(weight));
+        ET_targetWeight.setText(String.valueOf(targetWeight));
 
     }
+
+    @Override
+    public void onClick(View view) {
+        if (!isEnable) {
+            isEnable = true;
+            BTN_Edit.setBackgroundResource(R.mipmap.reset);
+            setEnable(isEnable);
+        } else {
+            isEnable = false;
+            BTN_Edit.setBackgroundResource(R.mipmap.edit);
+            setEnable(false);
+            User_Data userData = new User_Data();
+            userData.setMotto(ET_motto.getText().toString());
+            userData.setWeight(Double.valueOf(ET_weight.getText().toString()));
+            userData.setHeight(Double.valueOf(ET_height.getText().toString()));
+            userData.setTarget_weight(Double.valueOf(ET_targetWeight.getText().toString()));
+            userData.updateAll("userId = ?", userId);
+        }
+    }
+
+    //设置editText是否可以编辑
+    private void setEnable(boolean isEnable) {
+        ET_motto.setEnabled(isEnable);
+        ET_height.setEnabled(isEnable);
+        ET_weight.setEnabled(isEnable);
+        ET_targetWeight.setEnabled(isEnable);
+    }
+
+    //绑定全距离和总卡路里
+    private void bindRun() {
+        float totalDistance = 0;
+        int totalCalorie = 0;
+
+        if(!userId.equals("")) {
+            List<Run_Data> runData = DataSupport.select("distance", "calorie").where("userId = ?", userId).find(Run_Data.class);
+            for (Run_Data run_data : runData) {
+
+                totalDistance += run_data.getDistance();
+                totalCalorie += run_data.getCalorie();
+
+            }
+
+            TV_totalDistance.setText((Math.round(totalDistance * 100)) / 100 + "km");
+            TV_totalCalorie.setText(totalCalorie + "kcal");
+        }
+    }
+
 
 
 

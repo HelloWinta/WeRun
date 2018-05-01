@@ -15,11 +15,17 @@
     </FrameLayout>
     <!--Fragment显示结束-->
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/frameMenu"
+        android:background="@drawable/register_info_line"/>
     <!--底部按钮栏显示-->
     <FrameLayout
         android:id="@+id/frameMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorMain"
         android:layout_alignParentBottom="true" >
 
         <LinearLayout
@@ -27,30 +33,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal" >
 
-            <!-- 历史 -->
-
-            <LinearLayout
-                android:id="@+id/FL_History"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1" >
-
-                <Button
-                    android:id="@+id/BTN_History"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="top|center"
-                    android:background="@mipmap/unhistory"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
-                    android:text="历史"
-                    android:textColor="#000000"
-                    android:textSize="15sp" />
-            </LinearLayout>
 
             <!-- 跑步 -->
 
@@ -63,8 +45,8 @@
 
                 <Button
                     android:id="@+id/BTN_Run"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="top|center"
                     android:background="@mipmap/unrun" />
 
@@ -77,6 +59,16 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
+            <!-- 跑步按钮-->
+
+            <Button
+                android:id="@+id/BTN_go"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/run_go"/>
+
             <!-- 个人数据 -->
 
             <LinearLayout
@@ -88,8 +80,8 @@
 
                 <Button
                     android:id="@+id/BTN_User"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="top|center"
                     android:background="@mipmap/unuser"/>
 

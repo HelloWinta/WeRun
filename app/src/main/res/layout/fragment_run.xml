@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_margin="10dp"
-        android:text="只显示最近10天的运动记录"
+        android:text="只显示最近7天的运动记录"
         android:textSize="15sp"
         android:textColor="#02bbb7"
         />
@@ -37,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:layout_marginLeft="10dp"
-        android:text="公里"
+        android:layout_marginLeft="15dp"
+        android:text="米"
         android:textSize="15sp"
         android:textColor="#02bbb7"
         />
@@ -58,23 +58,21 @@
         app:xylinewidth="1dp"
         app:xytextcolor="#7e7e7e"
         app:xytextsize="12sp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/BTN_begin"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:background="@mipmap/run_go"/>
+        <ListView
+            android:id="@+id/LV_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#FFF"
+            android:dividerHeight="1px"
+            >
+
+        </ListView>
+
     </RelativeLayout>
-
-
-
-
-
 
 </LinearLayout>

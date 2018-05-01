@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * 自定义折线图
+
  */
 public class ChartView extends View {
     //xy坐标轴颜色
@@ -70,8 +71,8 @@ public class ChartView extends View {
     private List<Integer> yValue = new ArrayList<>();
     //折线对应的数据
     private Map<String, Integer> value = new HashMap<>();
-    //点击的点对应的X轴的第几个点，默认1
-    private int selectIndex = 1;
+    //点击的点对应的X轴的第几个点，默认7
+    private int selectIndex = 7;
     //X轴刻度文本对应的最大矩形，为了选中时，在x轴文本画的框框大小一致
     private Rect xValueRect;
     //速度检测器
@@ -503,6 +504,11 @@ public class ChartView extends View {
                     eventY >= y - dp8 && eventY <= y + dp8 && selectIndex != i + 1) {//每个节点周围8dp都是可点击区域
                 selectIndex = i + 1;
                 invalidate();
+
+                // 配合下面监听器
+                if (mDate != null) {
+                    mDate.OnChange(selectIndex);
+                }
                 return;
             }
             //X轴刻度
@@ -513,10 +519,20 @@ public class ChartView extends View {
             if (eventX >= x - rect.width() / 2 - dp8 && eventX <= x + rect.width() + dp8 / 2 &&
                     eventY >= y - dp8 && eventY <= y + rect.height() + dp8 && selectIndex != i + 1) {
                 selectIndex = i + 1;
+
+                // 配合下面监听器
+                if (mDate != null) {
+                    mDate.OnChange(selectIndex);
+                }
+
                 invalidate();
                 return;
             }
+
+
         }
+
+
     }
 
 
@@ -620,4 +636,19 @@ public class ChartView extends View {
         float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (scaledDensity * sp + 0.5f * (sp >= 0 ? 1 : -1));
     }
+
+    /**
+     * 监听器
+     */
+
+    private OnChangeDateListener mDate = null;
+
+    public void setOnChangeDateListener(OnChangeDateListener date) {
+        mDate = date;
+    }
+
+    public interface OnChangeDateListener {
+        void OnChange(int selectIndex);
+    }
+
 }

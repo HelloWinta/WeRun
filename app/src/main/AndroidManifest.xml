@@ -36,8 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".GuideActivity" />
 
         <provider
@@ -54,7 +55,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="9c729b5ac7ca920d10e311feab315290" />
 
-        <activity android:name=".Run"></activity>
+        <activity android:name=".Run" />
+        <activity android:name=".TraceActivity"></activity>
     </application>
 
 </manifest>

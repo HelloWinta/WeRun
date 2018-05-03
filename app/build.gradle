@@ -32,6 +32,6 @@ dependencies {
     //动态权限
     implementation 'com.yanzhenjie:permission:1.1.2'
     //litepal
-    compile 'org.litepal.android:core:1.6.1'
+    implementation 'org.litepal.android:core:1.6.1'
 
 }

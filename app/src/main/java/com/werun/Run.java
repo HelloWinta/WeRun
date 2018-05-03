@@ -29,6 +29,7 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
 import com.werun.Utils.MapFixUtil;
 import com.werun.Utils.PositionUtil;
+import com.werun.Utils.SaveArrayListUtil;
 import com.werun.db.Run_Data;
 
 import org.litepal.LitePal;
@@ -36,6 +37,7 @@ import org.litepal.LitePal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Run extends Activity implements LocationSource, AMapLocationListener, View.OnClickListener {
@@ -55,6 +57,8 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     private String beginTime;
     private String runDate;
 
+    SaveArrayListUtil mSaveArrayListUtil;//保存坐标到本地
+
 
     private AMap aMap;
     private MapView mapView;
@@ -66,7 +70,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
-    private List<LatLng> latLngs;
+    private ArrayList<LatLng> userLatLng = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,6 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
         mapView.onCreate(savedInstanceState);// 此方法必须重写
 
         isFirstLatLng = true;//初次打开第一次获取坐标
-        latLngs = new ArrayList<>();
         init();
 
         //获取开始运动的时间
@@ -122,8 +125,13 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BTN_stop:
-                LitePal.getDatabase();
-                setRunData();
+                if (userLatLng.size() >= 2) {
+                    LitePal.getDatabase();
+                    setRunData();
+                    //保存坐标到本地
+                    mSaveArrayListUtil = new SaveArrayListUtil();
+                    mSaveArrayListUtil.saveArrayList(getApplicationContext(), userLatLng, beginTime);
+                }
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
@@ -158,6 +166,8 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
             aMap.addPolyline((new PolylineOptions())
                     .add(oldData, newData)
                     .geodesic(true).color(Color.GREEN));
+
+            userLatLng.add(newData);
 
             latDistance = AMapUtils.calculateLineDistance(oldData, newData);
             totalDistance += (latDistance / 1000);
@@ -206,8 +216,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
                 double lat = newLatLng.latitude;
                 double point[] = MapFixUtil.transform(lat, lon);
                 LatLng newFixLatLng = new LatLng(point[0], point[1]);
-                //添加起点坐标
-                latLngs.add(newFixLatLng);
+
                 if (isFirstLatLng) {
                     //记录第一次的定位信息
                     oldFixLatLng = newFixLatLng;
@@ -218,8 +227,6 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
                     Log.e("Amap", amapLocation.getLatitude() + "," + amapLocation.getLongitude());
                     setUpMap(oldFixLatLng, newLatLng);
                     oldFixLatLng = newLatLng;
-                    //跑步过程中的坐标
-                    latLngs.add(newLatLng);
                 }
 
             } else {

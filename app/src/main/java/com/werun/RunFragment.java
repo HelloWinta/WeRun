@@ -4,11 +4,10 @@ package com.werun;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.werun.Utils.ChartView;
@@ -162,11 +161,22 @@ public class RunFragment extends Fragment {
      */
 
     private List<Run_Data> runDataList = new ArrayList<>();
+
     private void bindListViewData(String date ,View view) {
         runDataList = DataSupport.where("runDate = ?", date).find(Run_Data.class);
         RunDataAdapter adapter = new RunDataAdapter(getContext(), R.layout.history_listview, runDataList);
         ListView listView = (ListView) view.findViewById(R.id.LV_history);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Run_Data run_data = runDataList.get(i);
+                Intent intent = new Intent(getActivity(), TraceActivity.class);
+                intent.putExtra("RunBegin",run_data.getBeginTime());
+                startActivity(intent);
+            }
+        });
     }
 
 

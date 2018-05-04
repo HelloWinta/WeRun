@@ -255,17 +255,10 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
             //设置定位参数
             mLocationOption.setOnceLocation(false);
             mLocationOption.setOnceLocationLatest(true);
-            /**
-             * 设置是否优先返回GPS定位结果，如果30秒内GPS没有返回定位结果则进行网络定位
-             * 注意：只有在高精度模式下的单次定位有效，其他方式无效
-             */
+            //Gps优先
             mLocationOption.setGpsFirst(true);
             // 设置发送定位请求的时间间隔,最小值为1000ms,1秒更新一次定位信息
             mLocationOption.setInterval(2000);
-            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-            // 在定位结束后，在合适的生命周期调用onDestroy()方法
-            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
             mlocationClient.setLocationOption(mLocationOption);
 
 
@@ -296,7 +289,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     }
 
     /**
-     * 方法必须重写
+     * 方法重写
      */
     @Override
     protected void onResume() {
@@ -305,7 +298,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     }
 
     /**
-     * 方法必须重写
+     * 方法重写
      */
     @Override
     protected void onPause() {
@@ -315,7 +308,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     }
 
     /**
-     * 方法必须重写
+     * 方法重写
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -324,7 +317,7 @@ public class Run extends Activity implements LocationSource, AMapLocationListene
     }
 
     /**
-     * 方法必须重写
+     * 方法重写
      */
     @Override
     protected void onDestroy() {
